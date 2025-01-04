@@ -1,0 +1,108 @@
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.app-container {
+  padding: 20px;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+}
+
+.header input {
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.cart-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cart-icon span {
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+/* Product Card Styles */
+.product-card {
+  background-color: white;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.product-card h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.product-card p {
+  color: #555;
+}
+
+.product-card a {
+  text-decoration: none;
+  color: #007BFF;
+  font-size: 14px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+/* Cart Page Styles */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.cart-item button {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.cart-item button:hover {
+  background-color: darkred;
+}
+
+/* Footer Styles */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+}
