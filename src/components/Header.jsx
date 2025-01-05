@@ -1,17 +1,26 @@
-import PropTypes from 'prop-types';
+import { useContext } from "react";
+import PropTypes from "prop-types";
+import { CartContext } from "../context/CartContext";
+// import "./Header.css"; // Optional: Add styles here
 
 const Header = ({ onSearch }) => {
-  const handleInputChange = (e) => {
-    onSearch(e.target.value); // Call the onSearch function passed as prop
-  };
+  const { cartItems } = useContext(CartContext);
 
   return (
-    <header>
+    <header className="header">
+      <h1 className="logo">E-Commerce</h1>
       <input
         type="text"
         placeholder="Search products..."
-        onChange={handleInputChange}
+        className="search-bar"
+        onChange={(e) => onSearch(e.target.value)}
       />
+      <div className="cart-icon">
+        <span role="img" aria-label="cart">
+          🛒
+        </span>
+        <span className="cart-count">{cartItems.length}</span>
+      </div>
     </header>
   );
 };

@@ -1,13 +1,18 @@
+// src/App.jsx
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import Header from './components/Header';
-import CartProvider from './context/CartContext';
+import { CartContextProvider } from './context/CartContext'; // Correct import
 
 const App = () => {
+  const handleSearch = (query) => {
+    console.log("Search query:", query);
+  };
+
   return (
-    <CartProvider>
+    <CartContextProvider> {/* Wrap the app with CartContextProvider */}
       <Router>
         <Header />
         <Routes>
@@ -16,7 +21,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>
-    </CartProvider>
+    </CartContextProvider>
   );
 };
 

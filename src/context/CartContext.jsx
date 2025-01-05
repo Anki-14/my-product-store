@@ -1,28 +1,43 @@
-import { createContext, useContext, useState } from 'react';
-import PropTypes from 'prop-types';
+// src/context/CartContext.jsx
+import { createContext, useState } from "react";
+import PropTypes from "prop-types";
 
-const CartContext = createContext();
+export const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+export const CartContextProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
+  const addCartItem = (product) => {
+    setCartItems((prev) => {
+      const existingItem = prev.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prev.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
   };
 
-  const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  const updateCartItemQuantity = (id, quantity) => {
+    setCartItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity: Math.max(quantity, 1) } : item))
+    );
+  };
+
+  const removeCartItem = (id) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addCartItem, updateCartItemQuantity, removeCartItem }}
+    >
       {children}
     </CartContext.Provider>
   );
 };
 
-CartProvider.propTypes = {
+CartContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export const useCart = () => useContext(CartContext);

@@ -1,22 +1,31 @@
-import { useCart } from '../context/CartContext';
+// src/pages/Cart.jsx
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+import CartItem from "../components/CartItem";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useCart();
+  const { cartItems, updateCartItemQuantity, removeCartItem } = useContext(CartContext);
 
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
-    <div>
-      <h1>Cart</h1>
-      {cart.map((item) => (
-        <div key={item.id}>
-          <h3>{item.title}</h3>
-          <p>Quantity: {item.quantity}</p>
-          <p>Price: ${item.price * item.quantity}</p>
-          <button onClick={() => removeFromCart(item.id)}>Remove</button>
-        </div>
-      ))}
-      <h2>Total Price: ${totalPrice.toFixed(2)}</h2>
+    <div className="cart-page">
+      <h1>Your Cart</h1>
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <>
+          {cartItems.map((item) => (
+            <CartItem
+              key={item.id}
+              item={item}
+              onUpdateQuantity={updateCartItemQuantity}
+              onRemove={removeCartItem}
+            />
+          ))}
+          <h2>Total: ${totalPrice.toFixed(2)}</h2>
+        </>
+      )}
     </div>
   );
 };

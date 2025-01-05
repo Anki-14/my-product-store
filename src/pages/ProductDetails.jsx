@@ -1,31 +1,36 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchProductById } from '../api/api';
+// src/pages/ProductDetails.jsx
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { fetchProductDetails } from "../api/api.js";
 
-const ProductDetails = () => {
-  const { id } = useParams();
+const ProductDetails = ({ productId, onAddToCart }) => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const getProduct = async () => {
-      const data = await fetchProductById(id);
+    const loadProductDetails = async () => {
+      const data = await fetchProductDetails(productId);
       setProduct(data);
     };
-    getProduct();
-  }, [id]);
+    loadProductDetails();
+  }, [productId]);
 
   if (!product) return <p>Loading...</p>;
 
   return (
-    <div>
-      <img src={product.image} alt={product.title} />
+    <div className="product-details">
+      <img src={product.image} alt={product.title} className="product-image" />
       <h1>{product.title}</h1>
       <p>{product.description}</p>
-      <p>Price: ${product.price}</p>
-      <p>Rating: {product.rating.rate}</p>
       <p>Category: {product.category}</p>
+      <p>Price: ${product.price.toFixed(2)}</p>
+      <button onClick={() => onAddToCart(product)}>Add to Cart</button>
     </div>
   );
+};
+
+ProductDetails.propTypes = {
+  productId: PropTypes.number.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
 };
 
 export default ProductDetails;

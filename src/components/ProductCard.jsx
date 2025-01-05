@@ -1,25 +1,26 @@
 import PropTypes from 'prop-types';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onViewDetails, onAddToCart }) => {
   return (
     <div className="product-card">
       <img src={product.image} alt={product.title} />
       <h3>{product.title}</h3>
-      <p>{product.category}</p>
-      <p>${product.price}</p>
-      <a href={`/product/${product.id}`}>View Details</a>
+      <p>${product.price.toFixed(2)}</p>
+      <button onClick={() => onViewDetails(product.id)}>View Details</button>
+      <button onClick={() => onAddToCart(product.id)}>Add to Cart</button>
     </div>
   );
 };
 
 ProductCard.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Accept both string and number
+    image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    category: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
   }).isRequired,
+  onViewDetails: PropTypes.func.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
 };
 
 export default ProductCard;
